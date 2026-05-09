@@ -107,7 +107,51 @@
       #sidebar{position:fixed;left:-240px;transition:left .25s;}
       #sidebar.open{left:0;}
       #main{margin-left:0;}
+      /* bottom nav safe area */
+      #main > div.p-5{padding-bottom:80px;}
     }
+
+    /* ── Mobile topbar ── */
+    @media(max-width:640px){
+      #topbar-filters{display:none;}
+      #topbar-actions{gap:6px;}
+    }
+
+    /* ── Mobile filter drawer ── */
+    #mobile-filter-drawer{
+      position:fixed;left:0;right:0;bottom:0;z-index:60;
+      background:#fff;border-radius:20px 20px 0 0;
+      box-shadow:0 -4px 24px rgba(0,0,0,.12);
+      padding:20px 20px 32px;
+      transform:translateY(110%);
+      transition:transform .3s ease;
+    }
+    #mobile-filter-drawer.open{transform:translateY(0) !important;}
+    #mobile-filter-overlay{
+      position:fixed;top:0;left:0;right:0;bottom:0;z-index:59;
+      background:rgba(15,23,42,.35);
+      backdrop-filter:blur(2px);
+      display:none;
+    }
+    #mobile-filter-overlay.open{display:block;}
+
+    /* ── Mobile bottom nav ── */
+    #mobile-bottom-nav{
+      position:fixed;bottom:0;left:0;right:0;z-index:50;
+      background:#fff;border-top:1px solid #E2E8F0;
+      display:none;
+    }
+    @media(max-width:768px){
+      #mobile-bottom-nav{display:flex;}
+    }
+    .mbn-btn{
+      flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:8px 4px 10px;gap:3px;font-size:.65rem;font-weight:600;color:#94A3B8;
+      border:none;background:transparent;font-family:inherit;cursor:pointer;
+      transition:color .15s;
+    }
+    .mbn-btn i{font-size:1.1rem;}
+    .mbn-btn.active{color:#1D4ED8;}
 
     /* ── Tab bar ── */
     .tab-bar{display:flex;gap:2px;background:#F1F5F9;border-radius:10px;padding:3px;}
@@ -197,31 +241,31 @@
         <p class="text-xs text-slate-400 hidden sm:block">Programa Agora Tem Especialistas · São Luís, Maranhão</p>
       </div>
     </div>
-    <div class="flex items-center gap-2 flex-wrap">
-      <!-- Período -->
-      <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5">
-        <i class="fas fa-calendar-alt text-slate-400 text-xs"></i>
-        <input id="filter-start" type="date" title="Data inicial"
-          class="bg-transparent text-xs text-slate-600 outline-none w-28 cursor-pointer"
-          onchange="applyFilters()"/>
-        <span class="text-slate-300 text-xs">→</span>
-        <input id="filter-end" type="date" title="Data final"
-          class="bg-transparent text-xs text-slate-600 outline-none w-28 cursor-pointer"
-          onchange="applyFilters()"/>
-        <button onclick="clearPeriod()" title="Limpar período" class="text-slate-300 hover:text-slate-500 ml-1">
-          <i class="fas fa-times text-xs"></i>
-        </button>
+    <div id="topbar-actions" class="flex items-center gap-2">
+      <!-- Filtros desktop (hidden on mobile) -->
+      <div id="topbar-filters" class="hidden sm:flex items-center gap-2 flex-wrap">
+        <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5">
+          <i class="fas fa-calendar-alt text-slate-400 text-xs"></i>
+          <input id="filter-start" type="date" title="Data inicial"
+            class="bg-transparent text-xs text-slate-600 outline-none w-28 cursor-pointer"
+            onchange="applyFilters()"/>
+          <span class="text-slate-300 text-xs">→</span>
+          <input id="filter-end" type="date" title="Data final"
+            class="bg-transparent text-xs text-slate-600 outline-none w-28 cursor-pointer"
+            onchange="applyFilters()"/>
+          <button onclick="clearPeriod()" title="Limpar período" class="text-slate-300 hover:text-slate-500 ml-1">
+            <i class="fas fa-times text-xs"></i>
+          </button>
+        </div>
+        <select id="filter-fonte" class="filter-select" onchange="applyFilters()">
+          <option value="all">Todas as fontes</option>
+          <option value="ESTADO">Sec. Estadual</option>
+          <option value="MUNICIPIO">Sec. Municipal</option>
+        </select>
+        <select id="filter-proc" class="filter-select" onchange="applyFilters()">
+          <option value="all">Todos os procedimentos</option>
+        </select>
       </div>
-      <!-- Fonte Pagadora filter -->
-      <select id="filter-fonte" class="filter-select" onchange="applyFilters()">
-        <option value="all">Todas as fontes</option>
-        <option value="ESTADO">Sec. Estadual</option>
-        <option value="MUNICIPIO">Sec. Municipal</option>
-      </select>
-      <!-- Procedimento filter -->
-      <select id="filter-proc" class="filter-select" onchange="applyFilters()">
-        <option value="all">Todos os procedimentos</option>
-      </select>
       <!-- Refresh -->
       <button onclick="refreshData()" class="btn btn-outline" title="Atualizar dados">
         <i id="refresh-icon" class="fas fa-sync-alt"></i>
@@ -268,7 +312,7 @@
         <h2 class="text-xs font-700 text-slate-500 uppercase tracking-widest">Pipeline de Procedimentos</h2>
         <div class="flex-1 h-px bg-slate-200"></div>
         <span id="total-count" class="text-xs text-slate-400 font-500"></span>
-        <button onclick="showSection('performance')" style="background:linear-gradient(135deg,#4F46E5,#2563EB);box-shadow:0 2px 8px rgba(79,70,229,.35)" class="flex items-center gap-2 text-xs font-700 text-white rounded-xl px-4 py-2 hover:opacity-90 transition-opacity">
+        <button onclick="showSection('performance')" style="background:linear-gradient(135deg,#4F46E5,#2563EB);box-shadow:0 2px 8px rgba(79,70,229,.35)" class="hidden sm:flex items-center gap-2 text-xs font-700 text-white rounded-xl px-4 py-2 hover:opacity-90 transition-opacity">
           <i class="fas fa-chart-line"></i>Performance Evolutiva
         </button>
       </div>
@@ -307,7 +351,7 @@
         </div>
 
         <!-- Realizados -->
-        <div class="card kpi-card p-5 fade-up" style="border-top-color:#10B981;animation-delay:.18s">
+        <div class="card kpi-card p-5 fade-up col-span-2 lg:col-span-1" style="border-top-color:#10B981;animation-delay:.18s">
           <div class="flex items-start justify-between mb-4">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-50">
               <i class="fas fa-check-circle text-emerald-500"></i>
@@ -593,18 +637,21 @@
         <p class="text-xs font-700 text-blue-200 uppercase tracking-widest mb-2">Pacientes com Procedimentos Executados</p>
         <p id="perf-total" class="text-7xl font-900 text-white tracking-tight">—</p>
         <p class="text-sm text-blue-200 mt-3">cirurgias realizadas desde o início do programa · dez/2025</p>
-        <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-blue-400/30">
-          <div>
-            <p id="perf-total-enc" class="text-xl font-900 text-white">—</p>
-            <p class="text-xs text-blue-200 mt-1">Faturamento<br>total realizado</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-6 border-t border-blue-400/30">
+          <div class="flex sm:flex-col items-center sm:items-center justify-between sm:justify-center gap-2 sm:gap-0">
+            <p class="text-xs text-blue-200 sm:hidden">Faturamento total realizado</p>
+            <p id="perf-total-enc" class="text-lg sm:text-xl font-900 text-white">—</p>
+            <p class="text-xs text-blue-200 mt-1 hidden sm:block">Faturamento<br>total realizado</p>
           </div>
-          <div>
+          <div class="flex sm:flex-col items-center sm:items-center justify-between sm:justify-center gap-2 sm:gap-0">
+            <p class="text-xs text-blue-200 sm:hidden">Meses de programa</p>
             <p id="perf-meses" class="text-3xl font-900 text-white">—</p>
-            <p class="text-xs text-blue-200 mt-1">Meses de<br>programa</p>
+            <p class="text-xs text-blue-200 mt-1 hidden sm:block">Meses de<br>programa</p>
           </div>
-          <div>
+          <div class="flex sm:flex-col items-center sm:items-center justify-between sm:justify-center gap-2 sm:gap-0">
+            <p class="text-xs text-blue-200 sm:hidden">Média por mês</p>
             <p id="perf-media-mes" class="text-3xl font-900 text-white">—</p>
-            <p class="text-xs text-blue-200 mt-1">Média de cirurgias<br>por mês</p>
+            <p class="text-xs text-blue-200 mt-1 hidden sm:block">Média de cirurgias<br>por mês</p>
           </div>
         </div>
       </div>
@@ -651,6 +698,84 @@
 
   </div><!-- /page content -->
 </div><!-- /main -->
+
+<!-- ═══════════════════════════════════════════
+     MOBILE BOTTOM NAV
+════════════════════════════════════════════ -->
+<nav id="mobile-bottom-nav">
+  <button class="mbn-btn active" id="mbn-dashboard" onclick="showSection('dashboard')">
+    <i class="fas fa-chart-bar"></i>
+    <span>Pipeline</span>
+  </button>
+  <button class="mbn-btn" id="mbn-performance" onclick="showSection('performance')">
+    <i class="fas fa-chart-line"></i>
+    <span>Evolutivo</span>
+  </button>
+  <button class="mbn-btn" id="mbn-filters" onclick="toggleMobileFilters()">
+    <i class="fas fa-sliders-h"></i>
+    <span>Filtros</span>
+  </button>
+  <button class="mbn-btn" onclick="openModal('report')">
+    <i class="fas fa-file-pdf"></i>
+    <span>Relatório</span>
+  </button>
+</nav>
+
+<!-- Mobile filter overlay -->
+<div id="mobile-filter-overlay" onclick="toggleMobileFilters()"></div>
+
+<!-- Mobile filter drawer -->
+<div id="mobile-filter-drawer">
+  <div class="flex items-center justify-between mb-4">
+    <p class="text-sm font-700 text-slate-800">Filtros</p>
+    <button onclick="toggleMobileFilters()" class="text-slate-400 hover:text-slate-600">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="space-y-3">
+    <!-- Período -->
+    <div>
+      <p class="text-xs font-600 text-slate-500 mb-1.5">Período (Recebimento)</p>
+      <div class="flex items-center gap-2">
+        <input id="m-filter-start" type="date"
+          class="inp flex-1 text-sm py-2"
+          onchange="syncMobileFilters()"/>
+        <span class="text-slate-300 text-xs">→</span>
+        <input id="m-filter-end" type="date"
+          class="inp flex-1 text-sm py-2"
+          onchange="syncMobileFilters()"/>
+      </div>
+    </div>
+
+    <!-- Fonte Pagadora -->
+    <div>
+      <p class="text-xs font-600 text-slate-500 mb-1.5">Fonte Pagadora</p>
+      <select id="m-filter-fonte" class="filter-select w-full py-2.5" onchange="syncMobileFilters()">
+        <option value="all">Todas as fontes</option>
+        <option value="ESTADO">Sec. Estadual</option>
+        <option value="MUNICIPIO">Sec. Municipal</option>
+      </select>
+    </div>
+
+    <!-- Procedimento -->
+    <div>
+      <p class="text-xs font-600 text-slate-500 mb-1.5">Procedimento</p>
+      <select id="m-filter-proc" class="filter-select w-full py-2.5" onchange="syncMobileFilters()">
+        <option value="all">Todos os procedimentos</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flex gap-2 mt-5">
+    <button onclick="clearPeriodMobile()" class="btn btn-outline flex-1">
+      <i class="fas fa-times text-xs"></i>Limpar
+    </button>
+    <button onclick="toggleMobileFilters()" class="btn btn-primary flex-1">
+      Aplicar
+    </button>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════
      MODAL — CONFIGURAÇÕES
@@ -2004,6 +2129,61 @@ function showSection(s) {
   const h1 = document.querySelector('#topbar h1');
   if (h1) h1.textContent = titles[s] || 'Dashboard';
   if (s === 'performance') renderPerformance();
+  // sync bottom nav active state
+  ['dashboard','performance'].forEach(id => {
+    const btn = document.getElementById('mbn-' + id);
+    if (btn) btn.classList.toggle('active', id === s);
+  });
+  // scroll to top on mobile
+  const main = document.getElementById('main');
+  if (main) main.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Mobile filter drawer ──
+function toggleMobileFilters() {
+  const drawer  = document.getElementById('mobile-filter-drawer');
+  const overlay = document.getElementById('mobile-filter-overlay');
+  const isOpen  = drawer.classList.contains('open');
+  if (!isOpen) {
+    // sync desktop → mobile before opening
+    const copyVal = (from, to) => {
+      const s = document.getElementById(from), d = document.getElementById(to);
+      if (s && d) d.value = s.value;
+    };
+    copyVal('filter-start', 'm-filter-start');
+    copyVal('filter-end',   'm-filter-end');
+    copyVal('filter-fonte', 'm-filter-fonte');
+    // sync proc options
+    const src = document.getElementById('filter-proc');
+    const dst = document.getElementById('m-filter-proc');
+    if (src && dst) {
+      dst.innerHTML = src.innerHTML;
+      dst.value = src.value;
+    }
+  }
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+
+function syncMobileFilters() {
+  const copyVal = (from, to) => {
+    const s = document.getElementById(from), d = document.getElementById(to);
+    if (s && d) d.value = s.value;
+  };
+  copyVal('m-filter-start', 'filter-start');
+  copyVal('m-filter-end',   'filter-end');
+  copyVal('m-filter-fonte', 'filter-fonte');
+  copyVal('m-filter-proc',  'filter-proc');
+  applyFilters();
+}
+
+function clearPeriodMobile() {
+  ['m-filter-start','m-filter-end','m-filter-fonte','m-filter-proc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = el.tagName === 'SELECT' ? 'all' : '';
+  });
+  syncMobileFilters();
+  toggleMobileFilters();
 }
 
 function toggleRecords() {
