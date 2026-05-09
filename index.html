@@ -259,28 +259,21 @@
       <button onclick="this.closest('#demo-alert').classList.add('hidden')" class="ml-auto text-amber-400 hover:text-amber-600"><i class="fas fa-times"></i></button>
     </div>
 
+    <!-- ══ SECTION: DASHBOARD ══ -->
+    <div id="section-dashboard" class="space-y-5">
+
     <!-- ── PIPELINE ── -->
     <section class="fade-up">
       <div class="flex items-center gap-2 mb-3">
         <h2 class="text-xs font-700 text-slate-500 uppercase tracking-widest">Pipeline de Procedimentos</h2>
         <div class="flex-1 h-px bg-slate-200"></div>
         <span id="total-count" class="text-xs text-slate-400 font-500"></span>
+        <button onclick="showSection('performance')" style="background:linear-gradient(135deg,#4F46E5,#2563EB);box-shadow:0 2px 8px rgba(79,70,229,.35)" class="flex items-center gap-2 text-xs font-700 text-white rounded-xl px-4 py-2 hover:opacity-90 transition-opacity">
+          <i class="fas fa-chart-line"></i>Performance Evolutiva
+        </button>
       </div>
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-
-        <!-- Devolvidos -->
-        <div class="card kpi-card p-5 fade-up" style="border-top-color:#EF4444;animation-delay:.0s">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-red-50">
-              <i class="fas fa-undo text-red-500"></i>
-            </div>
-            <span class="pill pill-red">Devolvidos</span>
-          </div>
-          <div class="text-4xl font-900 text-slate-800 tracking-tight" id="cnt-devolvido">—</div>
-          <div class="text-xs text-slate-500 mt-1 mb-3">Pacientes devolvidos</div>
-          <div id="bd-devolvido" class="space-y-1.5"></div>
-        </div>
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
 
         <!-- Aguardando Agendamento -->
         <div class="card kpi-card p-5 fade-up" style="border-top-color:#F59E0B;animation-delay:.06s">
@@ -551,29 +544,110 @@
         <h2 class="text-xs font-700 text-slate-500 uppercase tracking-widest">Todos os Registros</h2>
         <div class="flex-1 h-px bg-slate-200"></div>
         <span id="records-count" class="text-xs text-slate-400"></span>
+        <button onclick="toggleRecords()" class="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 transition-colors">
+          <i id="records-toggle-icon" class="fas fa-chevron-down text-xs"></i>
+          <span id="records-toggle-label">Expandir</span>
+        </button>
       </div>
-      <div class="card overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="dt w-full">
-            <thead>
-              <tr>
-                <th class="text-left">Paciente</th>
-                <th class="text-left">Procedimento</th>
-                <th class="text-left">Secretaria</th>
-                <th class="text-center">Recebimento</th>
-                <th class="text-center">Agendamento</th>
-                <th class="text-center">Execução</th>
-                <th class="text-left">Status</th>
-                <th class="text-left">Observação</th>
-              </tr>
-            </thead>
-            <tbody id="records-tbody">
-              <tr><td colspan="8" class="text-center text-slate-400 py-10">Carregando…</td></tr>
-            </tbody>
-          </table>
+      <div id="records-body" class="hidden">
+        <div class="card overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="dt w-full">
+              <thead>
+                <tr>
+                  <th class="text-left">Paciente</th>
+                  <th class="text-left">Procedimento</th>
+                  <th class="text-left">Secretaria</th>
+                  <th class="text-center">Recebimento</th>
+                  <th class="text-center">Agendamento</th>
+                  <th class="text-center">Execução</th>
+                  <th class="text-left">Status</th>
+                  <th class="text-left">Observação</th>
+                </tr>
+              </thead>
+              <tbody id="records-tbody">
+                <tr><td colspan="8" class="text-center text-slate-400 py-10">Carregando…</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
+
+    </div><!-- /section-dashboard -->
+
+    <!-- ══ SECTION: PERFORMANCE EVOLUTIVA ══ -->
+    <div id="section-performance" class="hidden space-y-5">
+
+      <!-- Voltar -->
+      <div class="flex items-center gap-2">
+        <button onclick="showSection('dashboard')" class="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 transition-colors">
+          <i class="fas fa-arrow-left text-xs"></i>Pipeline
+        </button>
+        <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
+        <span class="text-xs font-600 text-slate-700">Performance Evolutiva</span>
+      </div>
+
+      <!-- Hero big number -->
+      <div class="card p-8 text-center" style="background:linear-gradient(135deg,#1B4693 0%,#2563EB 100%)">
+        <p class="text-xs font-700 text-blue-200 uppercase tracking-widest mb-2">Pacientes com Procedimentos Executados</p>
+        <p id="perf-total" class="text-7xl font-900 text-white tracking-tight">—</p>
+        <p class="text-sm text-blue-200 mt-3">cirurgias realizadas desde o início do programa · dez/2025</p>
+        <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-blue-400/30">
+          <div>
+            <p id="perf-total-enc" class="text-xl font-900 text-white">—</p>
+            <p class="text-xs text-blue-200 mt-1">Faturamento<br>total realizado</p>
+          </div>
+          <div>
+            <p id="perf-meses" class="text-3xl font-900 text-white">—</p>
+            <p class="text-xs text-blue-200 mt-1">Meses de<br>programa</p>
+          </div>
+          <div>
+            <p id="perf-media-mes" class="text-3xl font-900 text-white">—</p>
+            <p class="text-xs text-blue-200 mt-1">Média de cirurgias<br>por mês</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficos -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+        <!-- Chart 1: Pacientes por mês -->
+        <div class="card p-5">
+          <div class="mb-4">
+            <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Evolução Mensal</p>
+            <p class="text-sm font-700 text-slate-700">Pacientes recebidos por mês</p>
+          </div>
+          <div style="height:260px">
+            <canvas id="chart-perf-mensal"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Tempo médio por mês -->
+        <div class="card p-5">
+          <div class="mb-4">
+            <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Eficiência Operacional</p>
+            <p class="text-sm font-700 text-slate-700">Tempo médio Receb. → Execução (dias)</p>
+          </div>
+          <div style="height:260px">
+            <canvas id="chart-perf-tempo"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Chart 3: Faturamento mensal -->
+      <div class="card p-5">
+        <div class="mb-4">
+          <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Faturamento SIGTAP</p>
+          <p class="text-sm font-700 text-slate-700">Valor mensal realizado · R$</p>
+        </div>
+        <div style="height:260px">
+          <canvas id="chart-perf-fat"></canvas>
+        </div>
+      </div>
+
+    </div><!-- /section-performance -->
 
   </div><!-- /page content -->
 </div><!-- /main -->
@@ -1922,7 +1996,239 @@ async function refreshData() {
 }
 
 function showSection(s) {
-  // Single section for now
+  ['dashboard','performance'].forEach(id => {
+    const el = document.getElementById('section-' + id);
+    if (el) el.classList.toggle('hidden', id !== s);
+  });
+  const titles = { dashboard:'Dashboard', performance:'Performance Evolutiva' };
+  const h1 = document.querySelector('#topbar h1');
+  if (h1) h1.textContent = titles[s] || 'Dashboard';
+  if (s === 'performance') renderPerformance();
+}
+
+function toggleRecords() {
+  const body  = document.getElementById('records-body');
+  const icon  = document.getElementById('records-toggle-icon');
+  const label = document.getElementById('records-toggle-label');
+  const open  = !body.classList.contains('hidden');
+  body.classList.toggle('hidden', open);
+  icon.className  = open ? 'fas fa-chevron-down text-xs' : 'fas fa-chevron-up text-xs';
+  label.textContent = open ? 'Expandir' : 'Recolher';
+}
+
+// ══════════════════════════════════════════
+// PERFORMANCE EVOLUTIVA
+// ══════════════════════════════════════════
+function renderPerformance() {
+  // Big numbers (usa RAW completo, ignora filtro)
+  const totalReal = RAW.filter(r => getStage(r) === 'realizado').length;
+  setText('perf-total',     totalReal);   // hero = realizados
+  const totalFat = RAW.filter(r => getStage(r) === 'realizado').reduce((s, r) => {
+    const ok = Object.keys(SIGTAP_OVERRIDES).find(k => k.toLowerCase() === (r.procedimento||'').toLowerCase());
+    return s + (ok ? SIGTAP_OVERRIDES[ok] : sigtapValue(r.procedimento));
+  }, 0);
+  document.getElementById('perf-total-enc').textContent =
+    totalFat.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+
+  // Meses desde Dez/2025 até hoje
+  const inicio = new Date(2025, 11, 1);
+  const hoje   = new Date();
+  const mesHoje = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+  const months = [];
+  for (let d = new Date(inicio); d <= mesHoje; d.setMonth(d.getMonth() + 1))
+    months.push(new Date(d));
+
+  setText('perf-meses',     months.length);
+  setText('perf-media-mes', months.length ? Math.round(totalReal / months.length) : '—');
+
+  const labels = months.map(m =>
+    m.toLocaleDateString('pt-BR', { month:'short', year:'2-digit' })
+      .replace('.','').replace(' de ','/')
+  );
+
+  // Pacientes recebidos por mês
+  const recebPorMes = months.map(m =>
+    RAW.filter(r => r.dtRecebimento &&
+      r.dtRecebimento.getFullYear() === m.getFullYear() &&
+      r.dtRecebimento.getMonth()    === m.getMonth()
+    ).length
+  );
+
+  // Acumulado
+  let acc = 0;
+  const acumPorMes = recebPorMes.map(v => (acc += v));
+
+  // Tempo médio receb→exec por mês (agrupado pelo mês da execução)
+  const tempoPorMes = months.map(m => {
+    const realizados = RAW.filter(r =>
+      getStage(r) === 'realizado' &&
+      r.dtExecucao && r.dtRecebimento &&
+      r.dtExecucao.getFullYear() === m.getFullYear() &&
+      r.dtExecucao.getMonth()    === m.getMonth()
+    );
+    if (!realizados.length) return null;
+    const dias = realizados
+      .map(r => (r.dtExecucao - r.dtRecebimento) / 86400000)
+      .filter(d => d >= 0);
+    return dias.length ? Math.round(dias.reduce((a,b) => a+b, 0) / dias.length) : null;
+  });
+
+  // ── Chart 1: Barras mensais + linha acumulada ──
+  if (CHARTS.perfMensal) CHARTS.perfMensal.destroy();
+  const ctx1 = document.getElementById('chart-perf-mensal');
+  if (ctx1) {
+    CHARTS.perfMensal = new Chart(ctx1, {
+      data: {
+        labels,
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Novos pacientes',
+            data: recebPorMes,
+            backgroundColor: 'rgba(59,130,246,0.75)',
+            borderRadius: 5,
+            borderSkipped: false,
+            yAxisID: 'y',
+          },
+          {
+            type: 'line',
+            label: 'Acumulado',
+            data: acumPorMes,
+            borderColor: '#10B981',
+            backgroundColor: 'rgba(16,185,129,0.08)',
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointBackgroundColor: '#10B981',
+            fill: true,
+            tension: 0.35,
+            yAxisID: 'y2',
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode:'index', intersect:false },
+        plugins: {
+          legend: { position:'bottom', labels:{ font:{size:10}, color:'#64748B', boxWidth:10, padding:10 } }
+        },
+        scales: {
+          y:  { beginAtZero:true, ticks:{ stepSize:1, font:{size:10}, color:'#94A3B8' }, grid:{ color:'#F1F5F9' }, title:{ display:true, text:'Novos', font:{size:9}, color:'#94A3B8' } },
+          y2: { beginAtZero:true, position:'right', ticks:{ font:{size:10}, color:'#10B981' }, grid:{ display:false }, title:{ display:true, text:'Acumulado', font:{size:9}, color:'#10B981' } }
+        }
+      }
+    });
+  }
+
+  // ── Chart 2: Linha do tempo médio por mês ──
+  // Faturamento por mês (por dtExecucao)
+  const fatPorMes = months.map(m => {
+    return RAW.filter(r =>
+      getStage(r) === 'realizado' &&
+      r.dtExecucao &&
+      r.dtExecucao.getFullYear() === m.getFullYear() &&
+      r.dtExecucao.getMonth()    === m.getMonth()
+    ).reduce((s, r) => {
+      const overrideKey = Object.keys(SIGTAP_OVERRIDES).find(k => k.toLowerCase() === r.procedimento.toLowerCase());
+      return s + (overrideKey ? SIGTAP_OVERRIDES[overrideKey] : sigtapValue(r.procedimento));
+    }, 0);
+  });
+
+  // ── Chart 3: Faturamento mensal ──
+  if (CHARTS.perfFat) CHARTS.perfFat.destroy();
+  const ctx3 = document.getElementById('chart-perf-fat');
+  if (ctx3) {
+    const maxFat = Math.max(...fatPorMes.filter(v => v > 0), 1);
+    CHARTS.perfFat = new Chart(ctx3, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Faturamento SIGTAP',
+          data: fatPorMes,
+          backgroundColor: fatPorMes.map(v => `rgba(16,185,129,${0.4 + 0.55 * (v / maxFat)})`),
+          borderColor: '#059669',
+          borderWidth: 1.5,
+          borderRadius: 6,
+          borderSkipped: false,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode:'index', intersect:false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ' ' + (ctx.parsed.y).toLocaleString('pt-BR', { style:'currency', currency:'BRL' })
+            }
+          }
+        },
+        scales: {
+          x: { ticks:{ font:{size:10}, color:'#94A3B8' }, grid:{ display:false } },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              font:{size:10}, color:'#94A3B8',
+              callback: v => 'R$ ' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v)
+            },
+            grid:{ color:'#F1F5F9' }
+          }
+        }
+      }
+    });
+  }
+
+  if (CHARTS.perfTempo) CHARTS.perfTempo.destroy();
+  const ctx2 = document.getElementById('chart-perf-tempo');
+  if (ctx2) {
+    // Cor de cada ponto baseada no valor (verde ≤20, amarelo ≤35, vermelho >35)
+    const pontoCor = tempoPorMes.map(v =>
+      v === null ? 'transparent' : v <= 20 ? '#10B981' : v <= 35 ? '#F59E0B' : '#EF4444'
+    );
+    CHARTS.perfTempo = new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Tempo médio (dias)',
+            data: tempoPorMes,
+            borderColor: '#6366F1',
+            backgroundColor: 'rgba(99,102,241,0.08)',
+            borderWidth: 2.5,
+            pointRadius: 6,
+            pointBackgroundColor: pontoCor,
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            fill: true,
+            tension: 0.35,
+            spanGaps: true,
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode:'index', intersect:false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ctx.parsed.y !== null ? ` ${ctx.parsed.y} dias` : ' sem dados'
+            }
+          },
+          annotation: {}
+        },
+        scales: {
+          x: { ticks:{ font:{size:10}, color:'#94A3B8' }, grid:{ color:'#F1F5F9' } },
+          y: {
+            beginAtZero: true,
+            ticks:{ font:{size:10}, color:'#94A3B8', callback: v => v + 'd' },
+            grid:{ color:'#F1F5F9' }
+          }
+        }
+      }
+    });
+  }
 }
 
 // ══════════════════════════════════════════
