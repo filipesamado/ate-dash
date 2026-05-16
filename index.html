@@ -1318,11 +1318,14 @@ function applyFilters() {
   FILTERED = RAW.filter(r => {
     if (fonte !== 'all' && r.secretaria !== fonte) return false;
     if (proc  !== 'all' && r.procedimento !== proc) return false;
-    if (start && r.dtRecebimento) {
-      if (r.dtRecebimento < new Date(start + 'T00:00:00')) return false;
+    // Para realizados, filtra pela data de execução (quando o procedimento ocorreu).
+    // Para os demais estágios, filtra pela data de recebimento (quando entrou no pipeline).
+    const ref = r.dtExecucao || r.dtRecebimento;
+    if (start && ref) {
+      if (ref < new Date(start + 'T00:00:00')) return false;
     }
-    if (end && r.dtRecebimento) {
-      if (r.dtRecebimento > new Date(end + 'T23:59:59')) return false;
+    if (end && ref) {
+      if (ref > new Date(end + 'T23:59:59')) return false;
     }
     return true;
   });
