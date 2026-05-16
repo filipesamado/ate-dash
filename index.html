@@ -527,7 +527,7 @@
               <span id="meta-periodo-label" class="text-xs text-slate-400">—</span>
             </div>
             <div class="flex justify-between text-xs">
-              <span class="text-slate-400">Meta</span>
+              <span class="text-slate-400" id="meta-periodo-valor-label">Meta esperada</span>
               <span id="meta-periodo-valor" class="font-700 text-slate-700">—</span>
             </div>
             <div class="flex justify-between text-xs">
@@ -536,14 +536,15 @@
             </div>
             <div id="meta-periodo-pct-wrap" class="hidden">
               <div class="flex justify-between text-xs mb-1">
-                <span class="text-slate-400">Atingimento</span>
+                <span class="text-slate-400">Atingimento pro-rata</span>
                 <span id="meta-periodo-pct" class="font-700 text-emerald-600">—</span>
               </div>
               <div class="w-full bg-slate-100 rounded-full h-1.5">
                 <div id="meta-periodo-bar" class="h-1.5 rounded-full thermo-progress bg-emerald-500" style="width:0%"></div>
               </div>
+              <p id="meta-periodo-days" class="text-xs text-slate-400 mt-1"></p>
             </div>
-            <p id="meta-periodo-incomplete" class="hidden text-xs text-slate-400 italic">Selecione meses completos para ver o % de atingimento.</p>
+            <p id="meta-periodo-incomplete" class="hidden text-xs text-slate-400 italic">Meta não cadastrada para este período.</p>
           </div>
           <div class="space-y-1.5">
             <div class="flex items-center justify-between">
@@ -1597,15 +1598,41 @@ function metaAcumulada() {
                          .reduce((s, m) => s + m.meta, 0);
 }
 
+// Calcula a meta pro-rata para um intervalo de datas arbitrário.
+// Para cada mês coberto pelo filtro, pega a meta mensal e multiplica
+// pela fração de dias do mês que caem dentro do intervalo.
+function metaProRataCalc(startStr, endStr) {
+  if (!startStr || !endStr) return null;
+  const meses = META.meses || [];
+  if (!meses.length) return null;
+
+  const startD = new Date(startStr + 'T00:00:00');
+  const endD   = new Date(endStr   + 'T23:59:59');
+  let total = 0;
+
+  meses.forEach(({ mesDate, meta }) => {
+    if (!mesDate || !meta) return;
+    const mStart = new Date(mesDate.getFullYear(), mesDate.getMonth(), 1);
+    const mEnd   = new Date(mesDate.getFullYear(), mesDate.getMonth() + 1, 0); // último dia do mês
+    const overlapStart = startD > mStart ? startD : mStart;
+    const overlapEnd   = endD   < mEnd   ? endD   : mEnd;
+    if (overlapStart > overlapEnd) return;
+    const daysInMonth   = mEnd.getDate();
+    const daysInOverlap = Math.round((overlapEnd - overlapStart) / 86400000) + 1;
+    total += meta * (daysInOverlap / daysInMonth);
+  });
+
+  return total > 0 ? total : null;
+}
+
 // ══════════════════════════════════════════
 // RENDER FINANCIAL
 // ══════════════════════════════════════════
 function renderFinancial(m) {
-  const complete  = filterIsCompleteMonths();
   const hasFilter = !!(CFG.filterStart || CFG.filterEnd);
 
-  // ── Período ──
-  const mPer   = (complete === true) ? metaPeriodo() : null;
+  // ── Período: meta pro-rata para o intervalo exato do filtro ──
+  const mPer = metaProRataCalc(CFG.filterStart, CFG.filterEnd);
   const pctPer = mPer > 0 ? Math.min(m.valorReal / mPer, 1) * 100 : 0;
 
   // Label do período
@@ -1630,16 +1657,27 @@ function renderFinancial(m) {
     setText('meta-periodo-label', periodoLabel || '—');
     setText('meta-periodo-real', fmtBRL(m.valorReal));
 
-    const pctWrap   = document.getElementById('meta-periodo-pct-wrap');
+    const pctWrap    = document.getElementById('meta-periodo-pct-wrap');
     const incomplete = document.getElementById('meta-periodo-incomplete');
     if (mPer !== null) {
-      setText('meta-periodo-valor', fmtBRL(mPer));
-      setText('meta-periodo-pct', pctPer.toFixed(1)+'%');
+      // Calcula quantos dias cobre o filtro (para exibir informação de contexto)
+      const startD  = new Date(CFG.filterStart + 'T00:00:00');
+      const endD    = new Date(CFG.filterEnd   + 'T23:59:59');
+      const nDias   = Math.round((endD - startD) / 86400000) + 1;
+      const diaria  = mPer / nDias;
+
+      setText('meta-periodo-valor', fmtBRL(Math.round(mPer)));
+      setText('meta-periodo-pct',   pctPer.toFixed(1) + '%');
       const bar = document.getElementById('meta-periodo-bar');
-      if (bar) { bar.style.width = pctPer+'%'; bar.className = `h-1.5 rounded-full thermo-progress ${colorBar(pctPer)}`; }
+      if (bar) { bar.style.width = Math.min(pctPer, 100) + '%'; bar.className = `h-1.5 rounded-full thermo-progress ${colorBar(pctPer)}`; }
+      // Linha de contexto: taxa diária e nº de dias
+      const daysEl = document.getElementById('meta-periodo-days');
+      if (daysEl) daysEl.textContent = `${nDias} dias · ${fmtBRL(Math.round(diaria))}/dia esperado`;
       if (pctWrap)    pctWrap.classList.remove('hidden');
       if (incomplete) incomplete.classList.add('hidden');
     } else {
+      // Nenhuma meta cadastrada para o período
+      setText('meta-periodo-valor', '—');
       if (pctWrap)    pctWrap.classList.add('hidden');
       if (incomplete) incomplete.classList.remove('hidden');
     }
