@@ -317,42 +317,50 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
 
-        <!-- Aguardando Agendamento -->
-        <div class="card kpi-card p-5 fade-up" style="border-top-color:#F59E0B;animation-delay:.06s">
-          <div class="flex items-start justify-between mb-4">
+        <!-- Card 1: Aguarda Primeiro Contato Call Center -->
+        <div class="card kpi-card p-5 fade-up" style="border-top-color:#3B82F6;animation-delay:.03s">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50">
+              <i class="fas fa-phone text-blue-500"></i>
+            </div>
+            <span class="pill pill-blue" style="font-size:.62rem">Ag. 1º Contato CC</span>
+          </div>
+          <div class="text-4xl font-900 text-slate-800 tracking-tight" id="cnt-aguarda-cc">—</div>
+          <div class="text-xs text-slate-500 mt-1 mb-3">Aguarda Primeiro Contato<br><span class="font-600 text-blue-600">Call Center</span></div>
+          <div id="bd-aguarda-cc" class="space-y-1 max-h-56 overflow-y-auto pr-1"></div>
+        </div>
+
+        <!-- Card 2: Aguarda Contato Agendamento HM -->
+        <div class="card kpi-card p-5 fade-up" style="border-top-color:#6366F1;animation-delay:.06s">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-indigo-50">
+              <i class="fas fa-hospital text-indigo-500"></i>
+            </div>
+            <span class="pill pill-purple" style="font-size:.62rem">Ag. Contato HM</span>
+          </div>
+          <div class="text-4xl font-900 text-slate-800 tracking-tight" id="cnt-aguarda-hm">—</div>
+          <div class="text-xs text-slate-500 mt-1 mb-3">Aguarda Contato<br><span class="font-600 text-indigo-600">Agendamento HM</span></div>
+          <div id="bd-aguarda-hm" class="space-y-1 max-h-56 overflow-y-auto pr-1"></div>
+        </div>
+
+        <!-- Card 3: Aguarda Execução -->
+        <div class="card kpi-card p-5 fade-up" style="border-top-color:#F59E0B;animation-delay:.09s">
+          <div class="flex items-start justify-between mb-3">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-50">
-              <i class="fas fa-calendar-plus text-amber-500"></i>
+              <i class="fas fa-clock text-amber-500"></i>
             </div>
-            <span class="pill pill-amber">Ag. Agendamento</span>
+            <span class="pill pill-amber">Ag. Execução</span>
           </div>
-          <div class="text-4xl font-900 text-slate-800 tracking-tight" id="cnt-nao-agenda">—</div>
-          <div class="text-xs text-slate-500 mt-1 mb-3">Aguardando agendamento</div>
-          <div id="bd-nao-agenda" class="space-y-1.5"></div>
+          <div class="text-4xl font-900 text-slate-800 tracking-tight" id="cnt-aguarda-exec">—</div>
+          <div class="text-xs text-slate-500 mt-1 mb-3">Agendados, aguardando<br>realização</div>
+          <div id="bd-aguarda-exec" class="space-y-1 max-h-56 overflow-y-auto pr-1"></div>
         </div>
 
-        <!-- Aguardando Execução -->
-        <div class="card kpi-card p-5 fade-up" style="border-top-color:#EF6C00;animation-delay:.12s">
-          <div class="flex items-start justify-between mb-4">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-50">
-              <i class="fas fa-clock text-orange-500"></i>
-            </div>
-            <span class="pill pill-orange">Ag. Execução</span>
-          </div>
-          <div class="text-4xl font-900 text-slate-800 tracking-tight" id="cnt-nao-real">—</div>
-          <div class="text-xs text-slate-500 mt-1 mb-3">Agendados, aguardando realização</div>
-          <div id="bd-nao-real" class="space-y-1.5"></div>
-          <button onclick="toggleProcExpand('naoRealizado','#EF6C00')" class="w-full mt-3 flex items-center justify-center gap-1.5 text-xs text-slate-400 hover:text-orange-500 border-t border-slate-100 pt-2.5 transition-colors">
-            <i id="expand-icon-naoRealizado" class="fas fa-chevron-down"></i>
-            <span id="expand-label-naoRealizado">Ver procedimentos</span>
-          </button>
-          <div id="expand-naoRealizado" class="hidden mt-2 space-y-2 max-h-52 overflow-y-auto pr-1"></div>
-        </div>
-
-        <!-- Realizados -->
-        <div class="card kpi-card p-5 fade-up col-span-2 lg:col-span-1" style="border-top-color:#10B981;animation-delay:.18s">
-          <div class="flex items-start justify-between mb-4">
+        <!-- Card 4: Realizados -->
+        <div class="card kpi-card p-5 fade-up" style="border-top-color:#10B981;animation-delay:.12s">
+          <div class="flex items-start justify-between mb-3">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-emerald-50">
               <i class="fas fa-check-circle text-emerald-500"></i>
             </div>
@@ -372,157 +380,214 @@
     </section>
 
     <!-- ── MÉTRICAS + TERMÔMETRO ── -->
-    <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 fade-up" style="animation-delay:.1s">
+    <section class="space-y-4 fade-up" style="animation-delay:.1s">
 
-      <!-- Gauge 1: Recebimento → Agendamento -->
-      <div class="card p-4">
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Tempo</p>
-            <p class="text-xs font-700 text-slate-700">Recebimento → Agendamento</p>
+      <!-- Row 1: 4 gauges + meta -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+
+        <!-- Gauge 1: Recebimento → 1º Contato CC -->
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Tempo</p>
+              <p class="text-xs font-700 text-slate-700">Receb. → 1º Contato CC</p>
+            </div>
+            <span class="pill pill-blue text-xs">dias</span>
           </div>
-          <span class="pill pill-blue text-xs">dias</span>
-        </div>
-        <div class="flex items-center justify-center">
-          <div class="relative w-28 h-28">
-            <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#F1F5F9" stroke-width="12"/>
-              <circle id="gauge-agenda-ring" cx="60" cy="60" r="50" fill="none"
-                stroke="#3B82F6" stroke-width="12" stroke-linecap="round"
-                stroke-dasharray="314.2" stroke-dashoffset="314.2" class="gauge-ring"/>
-            </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <span id="gauge-agenda-val" class="text-xl font-800 text-slate-800">—</span>
-              <span class="text-xs text-slate-400">média</span>
+          <div class="flex items-center justify-center">
+            <div class="relative w-24 h-24">
+              <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#F1F5F9" stroke-width="12"/>
+                <circle id="gauge-cc-ring" cx="60" cy="60" r="50" fill="none"
+                  stroke="#3B82F6" stroke-width="12" stroke-linecap="round"
+                  stroke-dasharray="314.2" stroke-dashoffset="314.2" class="gauge-ring"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="gauge-cc-val" class="text-xl font-800 text-slate-800">—</span>
+                <span class="text-xs text-slate-400">média</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500">
-          Mediana: <span id="gauge-agenda-med" class="font-700 text-slate-700">—</span> dias
-        </div>
-        <div class="mt-2 grid grid-cols-3 gap-1 border-t border-slate-100 pt-2">
-          <div class="bg-green-50 rounded-lg p-1 text-center"><p class="text-xs text-green-600 font-700">≤ 7d</p><p class="text-xs text-green-500">Ideal</p></div>
-          <div class="bg-amber-50 rounded-lg p-1 text-center"><p class="text-xs text-amber-600 font-700">8–14d</p><p class="text-xs text-amber-500">Alerta</p></div>
-          <div class="bg-red-50 rounded-lg p-1 text-center"><p class="text-xs text-red-600 font-700">&gt;14d</p><p class="text-xs text-red-500">Crítico</p></div>
-        </div>
-      </div>
-
-      <!-- Gauge 2: Agendamento → Execução -->
-      <div class="card p-4">
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Tempo</p>
-            <p class="text-xs font-700 text-slate-700">Agendamento → Execução</p>
+          <div class="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500">
+            Mediana: <span id="gauge-cc-med" class="font-700 text-slate-700">—</span> dias
           </div>
-          <span class="pill pill-orange text-xs">dias</span>
+          <div class="mt-2 grid grid-cols-3 gap-1 border-t border-slate-100 pt-2">
+            <div class="bg-green-50 rounded-lg p-1 text-center"><p class="text-xs text-green-600 font-700">≤ 5d</p><p class="text-xs text-green-500">Ideal</p></div>
+            <div class="bg-amber-50 rounded-lg p-1 text-center"><p class="text-xs text-amber-600 font-700">6–10d</p><p class="text-xs text-amber-500">Alerta</p></div>
+            <div class="bg-red-50 rounded-lg p-1 text-center"><p class="text-xs text-red-600 font-700">&gt;10d</p><p class="text-xs text-red-500">Crítico</p></div>
+          </div>
         </div>
-        <div class="flex items-center justify-center">
-          <div class="relative w-28 h-28">
-            <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#F1F5F9" stroke-width="12"/>
-              <circle id="gauge-exec-ring" cx="60" cy="60" r="50" fill="none"
-                stroke="#EF6C00" stroke-width="12" stroke-linecap="round"
-                stroke-dasharray="314.2" stroke-dashoffset="314.2" class="gauge-ring"/>
-            </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <span id="gauge-exec-val" class="text-xl font-800 text-slate-800">—</span>
-              <span class="text-xs text-slate-400">média</span>
+
+        <!-- Gauge 2: CC → Contato Agendamento HM -->
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Tempo</p>
+              <p class="text-xs font-700 text-slate-700">Call Center → Contato HM</p>
+            </div>
+            <span class="pill pill-purple text-xs">dias</span>
+          </div>
+          <div class="flex items-center justify-center">
+            <div class="relative w-24 h-24">
+              <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#F1F5F9" stroke-width="12"/>
+                <circle id="gauge-cchm-ring" cx="60" cy="60" r="50" fill="none"
+                  stroke="#6366F1" stroke-width="12" stroke-linecap="round"
+                  stroke-dasharray="314.2" stroke-dashoffset="314.2" class="gauge-ring"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="gauge-cchm-val" class="text-xl font-800 text-slate-800">—</span>
+                <span class="text-xs text-slate-400">média</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500">
-          Mediana: <span id="gauge-exec-med" class="font-700 text-slate-700">—</span> dias
-        </div>
-        <div class="mt-2 grid grid-cols-3 gap-1 border-t border-slate-100 pt-2">
-          <div class="bg-green-50 rounded-lg p-1 text-center"><p class="text-xs text-green-600 font-700">≤ 15d</p><p class="text-xs text-green-500">Ideal</p></div>
-          <div class="bg-amber-50 rounded-lg p-1 text-center"><p class="text-xs text-amber-600 font-700">16–30d</p><p class="text-xs text-amber-500">Alerta</p></div>
-          <div class="bg-red-50 rounded-lg p-1 text-center"><p class="text-xs text-red-600 font-700">&gt;30d</p><p class="text-xs text-red-500">Crítico</p></div>
-        </div>
-      </div>
-
-      <!-- Gauge 3: Recebimento → Execução (total) -->
-      <div class="card p-4">
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Tempo Total</p>
-            <p class="text-xs font-700 text-slate-700">Recebimento → Execução</p>
+          <div class="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500">
+            Mediana: <span id="gauge-cchm-med" class="font-700 text-slate-700">—</span> dias
           </div>
-          <span class="pill pill-purple text-xs">dias</span>
+          <div class="mt-2 grid grid-cols-3 gap-1 border-t border-slate-100 pt-2">
+            <div class="bg-green-50 rounded-lg p-1 text-center"><p class="text-xs text-green-600 font-700">≤ 7d</p><p class="text-xs text-green-500">Ideal</p></div>
+            <div class="bg-amber-50 rounded-lg p-1 text-center"><p class="text-xs text-amber-600 font-700">8–14d</p><p class="text-xs text-amber-500">Alerta</p></div>
+            <div class="bg-red-50 rounded-lg p-1 text-center"><p class="text-xs text-red-600 font-700">&gt;14d</p><p class="text-xs text-red-500">Crítico</p></div>
+          </div>
         </div>
-        <div class="flex items-center justify-center">
-          <div class="relative w-28 h-28">
-            <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#F1F5F9" stroke-width="12"/>
-              <circle id="gauge-total-ring" cx="60" cy="60" r="50" fill="none"
-                stroke="#7C3AED" stroke-width="12" stroke-linecap="round"
-                stroke-dasharray="314.2" stroke-dashoffset="314.2" class="gauge-ring"/>
-            </svg>
-            <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <span id="gauge-total-val" class="text-xl font-800 text-slate-800">—</span>
-              <span class="text-xs text-slate-400">média</span>
+
+        <!-- Gauge 3: Contato HM → Execução -->
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Tempo</p>
+              <p class="text-xs font-700 text-slate-700">Contato HM → Execução</p>
+            </div>
+            <span class="pill pill-orange text-xs">dias</span>
+          </div>
+          <div class="flex items-center justify-center">
+            <div class="relative w-24 h-24">
+              <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#F1F5F9" stroke-width="12"/>
+                <circle id="gauge-exec-ring" cx="60" cy="60" r="50" fill="none"
+                  stroke="#F59E0B" stroke-width="12" stroke-linecap="round"
+                  stroke-dasharray="314.2" stroke-dashoffset="314.2" class="gauge-ring"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="gauge-exec-val" class="text-xl font-800 text-slate-800">—</span>
+                <span class="text-xs text-slate-400">média</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500">
-          Mediana: <span id="gauge-total-med" class="font-700 text-slate-700">—</span> dias
-        </div>
-        <div class="mt-2 grid grid-cols-3 gap-1 border-t border-slate-100 pt-2">
-          <div class="bg-green-50 rounded-lg p-1 text-center"><p class="text-xs text-green-600 font-700">≤ 21d</p><p class="text-xs text-green-500">Ideal</p></div>
-          <div class="bg-amber-50 rounded-lg p-1 text-center"><p class="text-xs text-amber-600 font-700">22–45d</p><p class="text-xs text-amber-500">Alerta</p></div>
-          <div class="bg-red-50 rounded-lg p-1 text-center"><p class="text-xs text-red-600 font-700">&gt;45d</p><p class="text-xs text-red-500">Crítico</p></div>
-        </div>
-      </div>
-
-      <!-- Meta Financeira -->
-      <div class="card p-4 flex flex-col gap-3">
-        <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Meta Financeira</p>
-
-        <!-- Sem filtro ativo -->
-        <p id="meta-nofilter-msg" class="hidden text-xs text-slate-400 italic">Use o filtro de datas para ver o atingimento do período.</p>
-
-        <!-- Período filtrado -->
-        <div id="meta-periodo-wrap" class="hidden pb-3 border-b border-slate-100 space-y-1.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-600 text-slate-600">Período</span>
-            <span id="meta-periodo-label" class="text-xs text-slate-400">—</span>
+          <div class="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500">
+            Mediana: <span id="gauge-exec-med" class="font-700 text-slate-700">—</span> dias
           </div>
-          <div class="flex justify-between text-xs">
-            <span class="text-slate-400">Meta</span>
-            <span id="meta-periodo-valor" class="font-700 text-slate-700">—</span>
+          <div class="mt-2 grid grid-cols-3 gap-1 border-t border-slate-100 pt-2">
+            <div class="bg-green-50 rounded-lg p-1 text-center"><p class="text-xs text-green-600 font-700">≤ 15d</p><p class="text-xs text-green-500">Ideal</p></div>
+            <div class="bg-amber-50 rounded-lg p-1 text-center"><p class="text-xs text-amber-600 font-700">16–30d</p><p class="text-xs text-amber-500">Alerta</p></div>
+            <div class="bg-red-50 rounded-lg p-1 text-center"><p class="text-xs text-red-600 font-700">&gt;30d</p><p class="text-xs text-red-500">Crítico</p></div>
           </div>
-          <div class="flex justify-between text-xs">
-            <span class="text-slate-400">Produzido</span>
-            <span id="meta-periodo-real" class="font-700 text-emerald-600">—</span>
+        </div>
+
+        <!-- Gauge 4: Tempo Total -->
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Tempo Total</p>
+              <p class="text-xs font-700 text-slate-700">Recebimento → Execução</p>
+            </div>
+            <span class="pill pill-purple text-xs">dias</span>
           </div>
-          <div id="meta-periodo-pct-wrap" class="hidden">
+          <div class="flex items-center justify-center">
+            <div class="relative w-24 h-24">
+              <svg viewBox="0 0 120 120" class="w-full h-full -rotate-90">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#F1F5F9" stroke-width="12"/>
+                <circle id="gauge-total-ring" cx="60" cy="60" r="50" fill="none"
+                  stroke="#7C3AED" stroke-width="12" stroke-linecap="round"
+                  stroke-dasharray="314.2" stroke-dashoffset="314.2" class="gauge-ring"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="gauge-total-val" class="text-xl font-800 text-slate-800">—</span>
+                <span class="text-xs text-slate-400">média</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 flex items-center justify-center gap-1.5 text-xs text-slate-500">
+            Mediana: <span id="gauge-total-med" class="font-700 text-slate-700">—</span> dias
+          </div>
+          <div class="mt-2 grid grid-cols-3 gap-1 border-t border-slate-100 pt-2">
+            <div class="bg-green-50 rounded-lg p-1 text-center"><p class="text-xs text-green-600 font-700">≤ 21d</p><p class="text-xs text-green-500">Ideal</p></div>
+            <div class="bg-amber-50 rounded-lg p-1 text-center"><p class="text-xs text-amber-600 font-700">22–45d</p><p class="text-xs text-amber-500">Alerta</p></div>
+            <div class="bg-red-50 rounded-lg p-1 text-center"><p class="text-xs text-red-600 font-700">&gt;45d</p><p class="text-xs text-red-500">Crítico</p></div>
+          </div>
+        </div>
+
+        <!-- Meta Financeira -->
+        <div class="card p-4 flex flex-col gap-3">
+          <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Meta Financeira</p>
+          <p id="meta-nofilter-msg" class="hidden text-xs text-slate-400 italic">Use o filtro de datas para ver o atingimento do período.</p>
+          <div id="meta-periodo-wrap" class="hidden pb-3 border-b border-slate-100 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-600 text-slate-600">Período</span>
+              <span id="meta-periodo-label" class="text-xs text-slate-400">—</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">Meta</span>
+              <span id="meta-periodo-valor" class="font-700 text-slate-700">—</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">Produzido</span>
+              <span id="meta-periodo-real" class="font-700 text-emerald-600">—</span>
+            </div>
+            <div id="meta-periodo-pct-wrap" class="hidden">
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-400">Atingimento</span>
+                <span id="meta-periodo-pct" class="font-700 text-emerald-600">—</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-1.5">
+                <div id="meta-periodo-bar" class="h-1.5 rounded-full thermo-progress bg-emerald-500" style="width:0%"></div>
+              </div>
+            </div>
+            <p id="meta-periodo-incomplete" class="hidden text-xs text-slate-400 italic">Selecione meses completos para ver o % de atingimento.</p>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-600 text-slate-600">Acumulado do Programa</span>
+              <span id="meta-acum-pct" class="text-xs font-700 text-emerald-600">—</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-400">Meta acumulada</span>
+              <span id="meta-acum-valor" class="font-700 text-slate-700">—</span>
+            </div>
             <div class="flex justify-between text-xs mb-1">
-              <span class="text-slate-400">Atingimento</span>
-              <span id="meta-periodo-pct" class="font-700 text-emerald-600">—</span>
+              <span class="text-slate-400">Produção total</span>
+              <span id="meta-acum-real" class="font-700 text-emerald-600">—</span>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-1.5">
-              <div id="meta-periodo-bar" class="h-1.5 rounded-full thermo-progress bg-emerald-500" style="width:0%"></div>
+              <div id="meta-acum-bar" class="h-1.5 rounded-full thermo-progress bg-emerald-500" style="width:0%"></div>
             </div>
           </div>
-          <p id="meta-periodo-incomplete" class="hidden text-xs text-slate-400 italic">Selecione meses completos (do dia 1 ao último dia) para ver o % de atingimento.</p>
         </div>
 
-        <!-- Acumulado do Programa -->
-        <div class="space-y-1.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-600 text-slate-600">Acumulado do Programa</span>
-            <span id="meta-acum-pct" class="text-xs font-700 text-emerald-600">—</span>
+      </div>
+
+      <!-- Row 2: Linha do Tempo Total (full width) -->
+      <div class="card p-5">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-xs font-700 text-slate-500 uppercase tracking-widest">Linha do Tempo</p>
+            <p class="text-sm font-700 text-slate-700">Composição do Tempo Total de Atendimento</p>
           </div>
-          <div class="flex justify-between text-xs">
-            <span class="text-slate-400">Meta acumulada</span>
-            <span id="meta-acum-valor" class="font-700 text-slate-700">—</span>
-          </div>
-          <div class="flex justify-between text-xs mb-1">
-            <span class="text-slate-400">Produção total</span>
-            <span id="meta-acum-real" class="font-700 text-emerald-600">—</span>
-          </div>
-          <div class="w-full bg-slate-100 rounded-full h-1.5">
-            <div id="meta-acum-bar" class="h-1.5 rounded-full thermo-progress bg-emerald-500" style="width:0%"></div>
-          </div>
+          <span id="gauge-total-badge" class="pill pill-purple text-xs">— dias total</span>
+        </div>
+        <!-- Legend -->
+        <div class="flex flex-wrap gap-3 mb-3">
+          <div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-sm" style="background:#3B82F6"></div><span class="text-xs text-slate-500">Receb. → 1º Contato CC</span></div>
+          <div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-sm" style="background:#6366F1"></div><span class="text-xs text-slate-500">CC → Contato HM</span></div>
+          <div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-sm" style="background:#F59E0B"></div><span class="text-xs text-slate-500">Contato HM → Execução</span></div>
+        </div>
+        <!-- Stacked bar -->
+        <div class="w-full bg-slate-100 rounded-xl overflow-hidden" style="height:36px">
+          <div id="timeline-bar" class="flex h-full items-stretch"></div>
+        </div>
+        <!-- Days labels -->
+        <div id="timeline-labels" class="flex mt-3 gap-2 flex-wrap">
+          <span class="text-xs text-slate-400">Calculado sobre pacientes <strong class="text-slate-600">Realizados</strong> com todas as datas preenchidas</span>
         </div>
       </div>
 
@@ -902,7 +967,7 @@ const LOGO_HM_B64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAAAAGDCAIAA
 // CONFIG
 // ══════════════════════════════════════════
 const CFG = {
-  SHEET_ID:       '1QLDem3i3dzI53B8Y5gV1ksjV5Fd8yK6s',
+  SHEET_ID:       '13g9jJe-i7l4rcDellcisaGfV2FWmFtquNdtjRfnGNSE',
   CONTROLE_SHEET: 'Controle SUS',   // dados brutos por paciente
   META_SHEET:     'Meta Mês',
   SIGTAP_SHEET:   'PROC SIGTAP',
@@ -1014,10 +1079,13 @@ function normalizeStatus(s) {
 }
 
 function getStage(r) {
-  if (r.status === 'DEVOLVIDO')             return 'devolvido';
-  if (r.status === 'REALIZADO' || r.dtExecucao) return 'realizado';
-  if (r.dtContato)                           return 'naoRealizado';
-  return 'naoAgendado';
+  if (r.status === 'DEVOLVIDO') return 'devolvido';
+  if (r.dtExecucao) return 'realizado';
+  if (r.dtAgendamento && !r.dtExecucao) return 'aguardaExecucao';
+  const ccOk = /contato\s*ok/i.test(r.statusCC);
+  if (ccOk && !r.dtContato) return 'aguardaHM';
+  if (!r.statusCC && !r.dtContato) return 'aguardaCC';
+  return 'outro'; // e.g. Não atendeu, or partial state
 }
 
 function parsePatientSheet(rows) {
@@ -1030,13 +1098,19 @@ function parsePatientSheet(rows) {
       codSigtap:     r[3].trim(),
       procedimento:  r[4].trim(),
       dtRecebimento: parseDateBR(r[5]),
-      dtContato:     parseDateBR(r[7]),
-      dtAgendamento: parseDateBR(r[8]),
-      dtExecucao:    parseDateBR(r[9]),
-      status:        normalizeStatus(r[10]),
-      senha:         r[11]?.trim() || '',
-      observacao:    r[12]?.trim() || '',
-      nAtendimento:  r[13]?.trim() || '',
+      docValidado:   r[6]?.trim() || '',
+      telefone1:     r[7]?.trim() || '',
+      telefone2:     r[8]?.trim() || '',
+      statusCC:      r[9]?.trim() || '',
+      dtContatoCC:   parseDateBR(r[10]),
+      obsCC:         r[11]?.trim() || '',
+      dtContato:     parseDateBR(r[12]),
+      dtAgendamento: parseDateBR(r[13]),
+      dtExecucao:    parseDateBR(r[14]),
+      status:        normalizeStatus(r[15]),
+      senha:         r[16]?.trim() || '',
+      observacao:    r[17]?.trim() || '',
+      nAtendimento:  r[18]?.trim() || '',
     }));
 }
 
@@ -1182,21 +1256,21 @@ async function loadData() {
 function loadDemo() {
   const d = (y,m,day) => new Date(y,m-1,day);
   RAW = [
-    { secretaria:'MUNICIPIO', nome:'Ana Lima',        procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,5),  dtContato:d(2026,1,8),  dtAgendamento:d(2026,1,12), dtExecucao:d(2026,1,17), status:'REALIZADO' },
-    { secretaria:'MUNICIPIO', nome:'Carlos Pereira',  procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,7),  dtContato:d(2026,1,9),  dtAgendamento:d(2026,1,12), dtExecucao:d(2026,1,15), status:'REALIZADO' },
-    { secretaria:'MUNICIPIO', nome:'Maria Santos',    procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,9),  dtContato:d(2026,1,10), dtAgendamento:d(2026,1,12), dtExecucao:d(2026,1,15), status:'REALIZADO' },
-    { secretaria:'MUNICIPIO', nome:'João Oliveira',   procedimento:'HERNIOPLASTIA INGUINAL / CRURAL (UNILATERAL)', dtRecebimento:d(2026,1,12), dtContato:d(2026,1,14), dtAgendamento:d(2026,1,28), dtExecucao:d(2026,1,31), status:'REALIZADO' },
-    { secretaria:'MUNICIPIO', nome:'Paula Costa',     procedimento:'ANGIOPLASTIA CORONARIANA',               dtRecebimento:d(2025,12,26),dtContato:d(2026,1,5),  dtAgendamento:d(2026,1,26), dtExecucao:d(2026,2,9),  status:'REALIZADO' },
-    { secretaria:'MUNICIPIO', nome:'Roberto Lima',    procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,13), dtContato:d(2026,1,15), dtAgendamento:d(2026,1,28), dtExecucao:d(2026,1,30), status:'REALIZADO' },
-    { secretaria:'MUNICIPIO', nome:'Fernanda Alves',  procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,14), dtContato:d(2026,1,18), dtAgendamento:d(2026,2,6),  dtExecucao:d(2026,2,14), status:'REALIZADO' },
-    { secretaria:'MUNICIPIO', nome:'Marcos Souza',    procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,20), dtContato:null,         dtAgendamento:null,          dtExecucao:null,         status:'NAO_AGENDADO' },
-    { secretaria:'MUNICIPIO', nome:'Juliana Nunes',   procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,15), dtContato:null,         dtAgendamento:null,          dtExecucao:null,         status:'DEVOLVIDO' },
-    { secretaria:'MUNICIPIO', nome:'Antônio Ferreira',procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,28), dtContato:d(2026,1,30), dtAgendamento:d(2026,2,6),  dtExecucao:null,         status:'NAO_REALIZADO' },
-    { secretaria:'ESTADO',    nome:'Beatriz Rocha',   procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2025,12,10),dtContato:d(2025,12,15),dtAgendamento:d(2025,12,20),dtExecucao:d(2026,1,5),  status:'REALIZADO' },
-    { secretaria:'ESTADO',    nome:'Luiz Mendes',     procedimento:'HERNIOPLASTIA INGUINAL / CRURAL (UNILATERAL)', dtRecebimento:d(2025,12,15),dtContato:d(2025,12,18),dtAgendamento:d(2025,12,22),dtExecucao:d(2026,1,8),  status:'REALIZADO' },
-    { secretaria:'ESTADO',    nome:'Camila Leal',     procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,3),  dtContato:d(2026,1,6),  dtAgendamento:d(2026,1,10), dtExecucao:d(2026,1,20), status:'REALIZADO' },
-    { secretaria:'ESTADO',    nome:'André Castro',    procedimento:'HERNIOPLASTIA INGUINAL / CRURAL (UNILATERAL)', dtRecebimento:d(2026,1,5),  dtContato:null,         dtAgendamento:null,          dtExecucao:null,         status:'NAO_AGENDADO' },
-    { secretaria:'ESTADO',    nome:'Rafaela Moura',   procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,8),  dtContato:null,         dtAgendamento:null,          dtExecucao:null,         status:'DEVOLVIDO' },
+    { secretaria:'MUNICIPIO', nome:'Ana Lima',        procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,5),  statusCC:'Contato OK', dtContatoCC:d(2026,1,8),  dtContato:d(2026,1,9),  dtAgendamento:d(2026,1,12), dtExecucao:d(2026,1,17), status:'REALIZADO' },
+    { secretaria:'MUNICIPIO', nome:'Carlos Pereira',  procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,7),  statusCC:'Contato OK', dtContatoCC:d(2026,1,9),  dtContato:d(2026,1,10), dtAgendamento:d(2026,1,12), dtExecucao:d(2026,1,15), status:'REALIZADO' },
+    { secretaria:'MUNICIPIO', nome:'Maria Santos',    procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,9),  statusCC:'Contato OK', dtContatoCC:d(2026,1,11), dtContato:d(2026,1,12), dtAgendamento:d(2026,1,15), dtExecucao:d(2026,1,18), status:'REALIZADO' },
+    { secretaria:'MUNICIPIO', nome:'João Oliveira',   procedimento:'HERNIOPLASTIA INGUINAL / CRURAL (UNILATERAL)', dtRecebimento:d(2026,1,12), statusCC:'Contato OK', dtContatoCC:d(2026,1,14), dtContato:d(2026,1,16), dtAgendamento:d(2026,1,28), dtExecucao:d(2026,1,31), status:'REALIZADO' },
+    { secretaria:'MUNICIPIO', nome:'Paula Costa',     procedimento:'ANGIOPLASTIA CORONARIANA',               dtRecebimento:d(2025,12,26),statusCC:'Contato OK', dtContatoCC:d(2026,1,2),  dtContato:d(2026,1,5),  dtAgendamento:d(2026,1,26), dtExecucao:d(2026,2,9),  status:'REALIZADO' },
+    { secretaria:'MUNICIPIO', nome:'Roberto Lima',    procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,13), statusCC:'Contato OK', dtContatoCC:d(2026,1,15), dtContato:d(2026,1,16), dtAgendamento:d(2026,1,28), dtExecucao:d(2026,1,30), status:'REALIZADO' },
+    { secretaria:'MUNICIPIO', nome:'Fernanda Alves',  procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,14), statusCC:'Contato OK', dtContatoCC:d(2026,1,17), dtContato:d(2026,1,18), dtAgendamento:d(2026,2,6),  dtExecucao:d(2026,2,14), status:'REALIZADO' },
+    { secretaria:'MUNICIPIO', nome:'Marcos Souza',    procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,20), statusCC:'', dtContatoCC:null, dtContato:null, dtAgendamento:null, dtExecucao:null, status:'' },
+    { secretaria:'MUNICIPIO', nome:'Juliana Nunes',   procedimento:'HISTERECTOMIA TOTAL',                    dtRecebimento:d(2026,1,15), statusCC:'', dtContatoCC:null, dtContato:null, dtAgendamento:null, dtExecucao:null, status:'DEVOLVIDO' },
+    { secretaria:'MUNICIPIO', nome:'Antônio Ferreira',procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,28), statusCC:'Contato OK', dtContatoCC:d(2026,1,30), dtContato:d(2026,2,2),  dtAgendamento:d(2026,2,6),  dtExecucao:null, status:'' },
+    { secretaria:'ESTADO',    nome:'Beatriz Rocha',   procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2025,12,10),statusCC:'Contato OK', dtContatoCC:d(2025,12,13),dtContato:d(2025,12,15),dtAgendamento:d(2025,12,20),dtExecucao:d(2026,1,5),  status:'REALIZADO' },
+    { secretaria:'ESTADO',    nome:'Luiz Mendes',     procedimento:'HERNIOPLASTIA INGUINAL / CRURAL (UNILATERAL)', dtRecebimento:d(2025,12,15),statusCC:'Contato OK', dtContatoCC:d(2025,12,17),dtContato:d(2025,12,18),dtAgendamento:d(2025,12,22),dtExecucao:d(2026,1,8),  status:'REALIZADO' },
+    { secretaria:'ESTADO',    nome:'Camila Leal',     procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,3),  statusCC:'Contato OK', dtContatoCC:d(2026,1,5),  dtContato:d(2026,1,6),  dtAgendamento:d(2026,1,10), dtExecucao:d(2026,1,20), status:'REALIZADO' },
+    { secretaria:'ESTADO',    nome:'André Castro',    procedimento:'HERNIOPLASTIA INGUINAL / CRURAL (UNILATERAL)', dtRecebimento:d(2026,1,5),  statusCC:'', dtContatoCC:null, dtContato:null, dtAgendamento:null, dtExecucao:null, status:'' },
+    { secretaria:'ESTADO',    nome:'Rafaela Moura',   procedimento:'COLECISTECTOMIA VIDEOLAPAROSCOPICA',     dtRecebimento:d(2026,1,8),  statusCC:'', dtContatoCC:null, dtContato:null, dtAgendamento:null, dtExecucao:null, status:'DEVOLVIDO' },
   ];
   META = { meses: [
     { mes:'Janeiro 2026',   meta:200000, mesDate:new Date(2026,0,1) },
@@ -1291,42 +1365,54 @@ function median(arr) {
 }
 
 function computeMetrics(rows) {
-  let totDev=0, totNA=0, totNR=0, totReal=0;
-  const daysAgenda = [], daysExec = [], daysTotal = [];
+  let totCC=0, totHM=0, totExecucao=0, totReal=0, totDev=0, totOutro=0;
+  const daysCC = [], daysCCtoHM = [], daysExec = [], daysTotal = [];
   let valorReal=0;
 
   rows.forEach(r => {
     const stage = getStage(r);
-    if      (stage === 'devolvido')    totDev++;
-    else if (stage === 'naoAgendado')  totNA++;
-    else if (stage === 'naoRealizado') totNR++;
+    if      (stage === 'devolvido')       totDev++;
+    else if (stage === 'aguardaCC')       totCC++;
+    else if (stage === 'aguardaHM')       totHM++;
+    else if (stage === 'aguardaExecucao') totExecucao++;
     else if (stage === 'realizado') {
       totReal++;
-      if (r.dtRecebimento && r.dtContato) {
-        const d = (r.dtContato - r.dtRecebimento) / 86400000;
-        if (d >= 0) daysAgenda.push(d);
+      // Tempo Recebimento → 1º Contato CC (only patients with CC contact)
+      if (r.dtContatoCC && r.dtRecebimento) {
+        const d = (r.dtContatoCC - r.dtRecebimento) / 86400000;
+        if (d >= 0) daysCC.push(d);
       }
-      if (r.dtContato && r.dtExecucao) {
+      // Tempo CC → Contato Agendamento HM
+      if (r.dtContato && r.dtContatoCC) {
+        const d = (r.dtContato - r.dtContatoCC) / 86400000;
+        if (d >= 0) daysCCtoHM.push(d);
+      }
+      // Tempo Contato HM → Execução
+      if (r.dtExecucao && r.dtContato) {
         const d = (r.dtExecucao - r.dtContato) / 86400000;
         if (d >= 0) daysExec.push(d);
       }
-      if (r.dtRecebimento && r.dtExecucao) {
+      // Tempo Total
+      if (r.dtExecucao && r.dtRecebimento) {
         const d = (r.dtExecucao - r.dtRecebimento) / 86400000;
         if (d >= 0) daysTotal.push(d);
       }
       const overrideKey = Object.keys(SIGTAP_OVERRIDES).find(k => k.toLowerCase() === r.procedimento.toLowerCase());
       valorReal += overrideKey ? SIGTAP_OVERRIDES[overrideKey] : sigtapValue(r.procedimento);
+    } else {
+      totOutro++;
     }
   });
 
-  const totAll = totDev + totNA + totNR + totReal;
+  const totAll = totDev + totCC + totHM + totExecucao + totReal + totOutro;
   const avg = arr => arr.length ? Math.round(arr.reduce((a,b)=>a+b,0)/arr.length) : null;
 
   return {
-    totDev, totNA, totNR, totReal, totAll, valorReal,
-    avgAgenda: avg(daysAgenda),  medAgenda: median(daysAgenda),
-    avgExec:   avg(daysExec),    medExec:   median(daysExec),
-    avgTotal:  avg(daysTotal),   medTotal:  median(daysTotal),
+    totDev, totCC, totHM, totExecucao, totReal, totOutro, totAll, valorReal,
+    avgCC:      avg(daysCC),      medCC:      median(daysCC),
+    avgCCtoHM:  avg(daysCCtoHM), medCCtoHM:  median(daysCCtoHM),
+    avgExec:    avg(daysExec),    medExec:    median(daysExec),
+    avgTotal:   avg(daysTotal),   medTotal:   median(daysTotal),
   };
 }
 
@@ -1334,17 +1420,47 @@ function computeMetrics(rows) {
 // RENDER PIPELINE
 // ══════════════════════════════════════════
 function renderPipeline(m) {
-  setText('cnt-devolvido',  m.totDev);
-  setText('cnt-nao-agenda', m.totNA);
-  setText('cnt-nao-real',   m.totNR);
-  setText('cnt-realizado',  m.totReal);
-  setText('total-count',    `${m.totAll} encaminhamentos no total`);
+  setText('cnt-aguarda-cc',  m.totCC);
+  setText('cnt-aguarda-hm',  m.totHM);
+  setText('cnt-aguarda-exec',m.totExecucao);
+  setText('cnt-realizado',   m.totReal);
+  setText('total-count', `${m.totAll} encaminhamentos no total`);
 
-  // Breakdown pills
-  renderFontePills('bd-devolvido',  'devolvido',    'pill-red');
-  renderFontePills('bd-nao-agenda', 'naoAgendado',  'pill-amber');
-  renderFontePills('bd-nao-real',   'naoRealizado', 'pill-orange');
-  renderFontePills('bd-realizado',  'realizado',    'pill-green');
+  renderFonteProcPills('bd-aguarda-cc',   'aguardaCC',       'pill-blue');
+  renderFonteProcPills('bd-aguarda-hm',   'aguardaHM',       'pill-indigo');
+  renderFonteProcPills('bd-aguarda-exec', 'aguardaExecucao', 'pill-orange');
+  renderFontePills(    'bd-realizado',    'realizado',       'pill-green');
+}
+
+function renderFonteProcPills(elId, stage, pillClass) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const stageRows = FILTERED.filter(r => getStage(r) === stage);
+  const byFonte = {};
+  stageRows.forEach(r => {
+    const f = r.secretaria === 'ESTADO' ? 'Sec. Estadual' : r.secretaria === 'MUNICIPIO' ? 'Sec. Municipal' : r.secretaria;
+    if (!byFonte[f]) byFonte[f] = { total: 0, procs: {} };
+    byFonte[f].total++;
+    byFonte[f].procs[r.procedimento] = (byFonte[f].procs[r.procedimento] || 0) + 1;
+  });
+
+  el.innerHTML = Object.entries(byFonte).map(([fonte, data]) => {
+    const procList = Object.entries(data.procs).sort((a,b) => b[1]-a[1]);
+    const procsHTML = procList.map(([proc, cnt]) => {
+      const short = proc.length > 40 ? proc.substring(0,40)+'…' : proc;
+      return `<div class="flex items-center justify-between text-xs ml-2 mt-0.5">
+        <span class="text-slate-400 leading-tight flex-1 mr-1" title="${proc}">${short}</span>
+        <span class="text-slate-600 font-700 flex-shrink-0">${cnt}</span>
+      </div>`;
+    }).join('');
+    return `<div class="mb-2">
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-slate-600 font-600">${fonte}</span>
+        <span class="${pillClass} pill">${data.total}</span>
+      </div>
+      ${procsHTML}
+    </div>`;
+  }).join('') || '<p class="text-xs text-slate-400 italic">Nenhum paciente</p>';
 }
 
 function renderFontePills(elId, stage, pillClass) {
@@ -1379,12 +1495,54 @@ function renderTimeGauges(m) {
     setText(medId, med !== null ? med : '—');
   };
 
-  setGauge('gauge-agenda-ring', 'gauge-agenda-val', 'gauge-agenda-med',
-           m.avgAgenda, m.medAgenda, 30, [7, 14]);
-  setGauge('gauge-exec-ring',   'gauge-exec-val',   'gauge-exec-med',
-           m.avgExec,   m.medExec,   60, [15, 30]);
-  setGauge('gauge-total-ring',  'gauge-total-val',  'gauge-total-med',
-           m.avgTotal,  m.medTotal,  90, [21, 45]);
+  setGauge('gauge-cc-ring',    'gauge-cc-val',    'gauge-cc-med',    m.avgCC,     m.medCC,     30, [5, 10]);
+  setGauge('gauge-cchm-ring',  'gauge-cchm-val',  'gauge-cchm-med',  m.avgCCtoHM, m.medCCtoHM, 30, [7, 14]);
+  setGauge('gauge-exec-ring',  'gauge-exec-val',  'gauge-exec-med',  m.avgExec,   m.medExec,   60, [15, 30]);
+  setGauge('gauge-total-ring', 'gauge-total-val', 'gauge-total-med', m.avgTotal,  m.medTotal,  90, [21, 45]);
+
+  // Render stacked timeline bar for total
+  renderTotalTimeline(m);
+}
+
+function renderTotalTimeline(m) {
+  const badge = document.getElementById('gauge-total-badge');
+  if (badge) badge.textContent = m.avgTotal !== null ? `${m.avgTotal} dias total` : '— dias total';
+
+  const bar = document.getElementById('timeline-bar');
+  if (!bar) return;
+
+  const segs = [
+    { val: m.avgCC,     color: '#3B82F6', label: 'Receb.→CC' },
+    { val: m.avgCCtoHM, color: '#6366F1', label: 'CC→HM' },
+    { val: m.avgExec,   color: '#F59E0B', label: 'HM→Exec.' },
+  ];
+  const total = m.avgTotal || segs.reduce((a,s) => a + (s.val||0), 0) || 1;
+  const anyDefined = segs.some(s => s.val !== null);
+
+  if (!anyDefined) {
+    bar.innerHTML = '<div class="flex items-center justify-center w-full h-full text-xs text-slate-400">Sem dados suficientes</div>';
+    return;
+  }
+
+  // Remaining = total - sum of defined segments
+  const sumSegs = segs.reduce((a,s) => a + (s.val||0), 0);
+  const remaining = Math.max(0, total - sumSegs);
+
+  let html = segs.map(s => {
+    if (s.val === null || s.val === 0) return '';
+    const pct = (s.val / total * 100).toFixed(1);
+    return `<div style="width:${pct}%;background:${s.color};position:relative;min-width:28px" title="${s.label}: ${s.val} dias">
+      <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:800">${s.val}d</span>
+    </div>`;
+  }).join('');
+
+  if (remaining > 0) {
+    const pct = (remaining / total * 100).toFixed(1);
+    html += `<div style="width:${pct}%;background:#E2E8F0;position:relative" title="Outros: ${remaining} dias">
+      <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:9px;font-weight:700">${remaining}d</span>
+    </div>`;
+  }
+  bar.innerHTML = html;
 }
 
 // ══════════════════════════════════════════
@@ -1514,7 +1672,7 @@ function renderBreakdownTable() {
   thead.innerHTML = `<tr>
     <th class="text-left">${label}</th>
     <th class="text-center">Devolvidos</th>
-    <th class="text-center">Ag. Agendamento</th>
+    <th class="text-center">Em Fila (CC/HM)</th>
     <th class="text-center">Ag. Execução</th>
     <th class="text-center">Realizados</th>
     <th class="text-center">Total</th>
@@ -1529,8 +1687,8 @@ function renderBreakdownTable() {
     if (!groups[k]) groups[k] = { dev:0, na:0, nr:0, real:0, tot:0 };
     const stage = getStage(r);
     if      (stage === 'devolvido')    groups[k].dev++;
-    else if (stage === 'naoAgendado')  groups[k].na++;
-    else if (stage === 'naoRealizado') groups[k].nr++;
+    else if (stage === 'aguardaCC' || stage === 'aguardaHM') groups[k].na++;
+    else if (stage === 'aguardaExecucao') groups[k].nr++;
     else if (stage === 'realizado')    groups[k].real++;
     groups[k].tot++;
   });
@@ -1579,10 +1737,12 @@ function renderRecords() {
 
   const fmtDate = d => d ? d.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'2-digit'}) : '<span class="text-slate-300">—</span>';
   const stageLabel = {
-    devolvido:    ['status-devolvido',  'Devolvido'],
-    naoAgendado:  ['status-nao-agenda', 'Ag. Agendamento'],
-    naoRealizado: ['status-nao-real',   'Ag. Realização'],
-    realizado:    ['status-realizado',  'Realizado'],
+    devolvido:       ['status-devolvido',  'Devolvido'],
+    aguardaCC:       ['status-nao-agenda', 'Ag. 1º Contato CC'],
+    aguardaHM:       ['status-nao-agenda', 'Ag. Contato HM'],
+    aguardaExecucao: ['status-nao-real',   'Ag. Execução'],
+    realizado:       ['status-realizado',  'Realizado'],
+    outro:           ['pill-slate',        'Outro'],
   };
 
   tbody.innerHTML = FILTERED.map(r => {
@@ -1622,8 +1782,8 @@ function renderFonteChart() {
     if (!groups[k]) groups[k] = { dev:0, na:0, nr:0, real:0 };
     const stage = getStage(r);
     if      (stage === 'devolvido')    groups[k].dev++;
-    else if (stage === 'naoAgendado')  groups[k].na++;
-    else if (stage === 'naoRealizado') groups[k].nr++;
+    else if (stage === 'aguardaCC' || stage === 'aguardaHM') groups[k].na++;
+    else if (stage === 'aguardaExecucao') groups[k].nr++;
     else if (stage === 'realizado')    groups[k].real++;
   });
 
@@ -1634,7 +1794,7 @@ function renderFonteChart() {
       labels,
       datasets: [
         { label:'Devolvidos',      data: labels.map(k => groups[k].dev),  backgroundColor:'#EF4444', borderRadius:4 },
-        { label:'Ag. Agendamento', data: labels.map(k => groups[k].na),   backgroundColor:'#F59E0B', borderRadius:4 },
+        { label:'Em Fila (CC/HM)', data: labels.map(k => groups[k].na),   backgroundColor:'#6366F1', borderRadius:4 },
         { label:'Ag. Execução',    data: labels.map(k => groups[k].nr),   backgroundColor:'#EF6C00', borderRadius:4 },
         { label:'Realizados',      data: labels.map(k => groups[k].real), backgroundColor:'#10B981', borderRadius:4 },
       ]
@@ -1761,7 +1921,7 @@ function renderProcExpandContent(stage, color) {
 // ══════════════════════════════════════════
 function renderAll() {
   // Fechar paineis expandidos ao atualizar dados
-  ['naoRealizado','realizado'].forEach(stage => {
+  ['realizado'].forEach(stage => {
     const panel = document.getElementById('expand-' + stage);
     const icon  = document.getElementById('expand-icon-' + stage);
     const label = document.getElementById('expand-label-' + stage);
@@ -1861,8 +2021,8 @@ function buildReportHTML() {
       if (!procs[r.procedimento]) procs[r.procedimento] = { dev:0, na:0, nr:0, real:0, tot:0 };
       const stage = getStage(r);
       if      (stage === 'devolvido')    procs[r.procedimento].dev++;
-      else if (stage === 'naoAgendado')  procs[r.procedimento].na++;
-      else if (stage === 'naoRealizado') procs[r.procedimento].nr++;
+      else if (stage === 'aguardaCC' || stage === 'aguardaHM') procs[r.procedimento].na++;
+      else if (stage === 'aguardaExecucao') procs[r.procedimento].nr++;
       else if (stage === 'realizado')    procs[r.procedimento].real++;
       procs[r.procedimento].tot++;
     });
@@ -1894,8 +2054,8 @@ function buildReportHTML() {
       if (!fontes[f]) fontes[f] = { dev:0, na:0, nr:0, real:0, tot:0 };
       const stage = getStage(r);
       if      (stage === 'devolvido')    fontes[f].dev++;
-      else if (stage === 'naoAgendado')  fontes[f].na++;
-      else if (stage === 'naoRealizado') fontes[f].nr++;
+      else if (stage === 'aguardaCC' || stage === 'aguardaHM') fontes[f].na++;
+      else if (stage === 'aguardaExecucao') fontes[f].nr++;
       else if (stage === 'realizado')    fontes[f].real++;
       fontes[f].tot++;
     });
@@ -1944,11 +2104,12 @@ function buildReportHTML() {
     </div>
 
     <!-- KPI Grid -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">
       ${[
-        ['Ag. Agendamento',  m.totNA,   '#FEF3C7','#B45309'],
-        ['Ag. Execução',     m.totNR,   '#FFEDD5','#C2410C'],
-        ['Realizados',       m.totReal, '#DCFCE7','#15803D'],
+        ['Ag. 1º Contato CC', m.totCC,       '#DBEAFE','#1D4ED8'],
+        ['Ag. Contato HM',    m.totHM,       '#EDE9FE','#7C3AED'],
+        ['Ag. Execução',      m.totExecucao, '#FFEDD5','#C2410C'],
+        ['Realizados',        m.totReal,     '#DCFCE7','#15803D'],
       ].map(([l,v,bg,c]) => `
         <div style="background:${bg};border-radius:8px;padding:14px;text-align:center">
           <div style="font-size:26px;font-weight:900;color:${c}">${v}</div>
@@ -1957,11 +2118,12 @@ function buildReportHTML() {
     </div>
 
     <!-- Tempo médio + mediana -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
       ${[
-        ['Receb. → Agendamento', m.avgAgenda, m.medAgenda, '#3B82F6'],
-        ['Agendamento → Execução', m.avgExec, m.medExec,   '#EF6C00'],
-        ['Tempo Total (Receb. → Exec.)', m.avgTotal, m.medTotal, '#7C3AED'],
+        ['Receb. → 1º Contato CC',  m.avgCC,     m.medCC,     '#3B82F6'],
+        ['CC → Contato HM',         m.avgCCtoHM, m.medCCtoHM, '#6366F1'],
+        ['Contato HM → Execução',   m.avgExec,   m.medExec,   '#F59E0B'],
+        ['Tempo Total',             m.avgTotal,  m.medTotal,  '#7C3AED'],
       ].map(([l,avg,med,c]) => `
         <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:12px;text-align:center">
           <div style="font-size:9px;color:#64748B;font-weight:700;text-transform:uppercase;margin-bottom:6px">${l}</div>
