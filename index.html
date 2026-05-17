@@ -1085,7 +1085,8 @@ function getStage(r) {
   if (r.dtAgendamento && !r.dtExecucao) return 'aguardaExecucao';
   const ccOk = /contato\s*ok/i.test(r.statusCC);
   if (ccOk && !r.dtContato) return 'aguardaHM';
-  if (!r.statusCC && !r.dtContato) return 'aguardaCC';
+  // Só entra no funil CC se tiver ao menos um telefone cadastrado
+  if (!r.statusCC && !r.dtContato && (r.telefone1 || r.telefone2)) return 'aguardaCC';
   return 'outro'; // e.g. Não atendeu, or partial state
 }
 
